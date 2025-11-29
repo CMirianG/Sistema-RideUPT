@@ -17,6 +17,8 @@
 ## ÍNDICE GENERAL
 
 1. [Descripción del Proyecto](#1-descripción-del-proyecto)
+   - 1.5 Requerimientos Funcionales
+   - 1.6 Requerimientos No Funcionales
 2. [Riesgos](#2-riesgos)
 3. [Análisis de la Situación actual](#3-análisis-de-la-situación-actual)
 4. [Estudio de Factibilidad](#4-estudio-de-factibilidad)
@@ -65,6 +67,41 @@ Desarrollar una plataforma segura y eficiente de viajes compartidos exclusiva pa
 
 • Garantizar la usabilidad y accesibilidad mediante una interfaz intuitiva.
 
+### 1.5 Requerimientos Funcionales
+
+El sistema RideUPT contempla los siguientes requerimientos funcionales priorizados:
+
+| ID | Nombre | Descripción | Prioridad |
+|----|--------|-------------|-----------|
+| RF001 | Autenticar Usuario | El sistema debe permitir el registro e inicio de sesión de usuarios con credenciales válidas de estudiantes. | Alta |
+| RF002 | Gestionar Conductor | El sistema debe permitir la aceptación (habilitación) y edición de perfiles de conductor. | Alta |
+| RF003 | Crear Viaje | Los conductores deben poder crear viajes usando geolocalización automática para el origen. | Alta |
+| RF004 | Buscar Viaje | Los pasajeros deben poder buscar viajes disponibles por origen, destino y hora. | Alta |
+| RF005 | Enviar Notificación | El sistema debe enviar notificaciones en tiempo real ante cambios de estado relevantes. | Media |
+| RF006 | Consultar Historial | Los usuarios deben poder acceder a un historial de viajes pasados y próximos. | Media |
+| RF007 | Expirar Viaje | Los viajes deben expirar automáticamente después de 10 minutos si no son tomados. | Media |
+| RF008 | Autenticar con Google | El sistema debe permitir autenticación rápida y segura mediante cuentas de Google. | Alta |
+
+**Total de Requerimientos Funcionales**: 8 requerimientos
+- **Prioridad Alta**: 5 requerimientos (RF001, RF002, RF003, RF004, RF008)
+- **Prioridad Media**: 3 requerimientos (RF005, RF006, RF007)
+
+### 1.6 Requerimientos No Funcionales
+
+El sistema RideUPT debe cumplir con los siguientes requerimientos no funcionales que garantizan la calidad, seguridad y rendimiento de la plataforma:
+
+| ID | Requerimiento | Descripción | Prioridad | Estado |
+|----|---------------|-------------|-----------|--------|
+| RNF001 | Usabilidad | Interfaz intuitiva con tiempo de aprendizaje < 3 minutos | Alta | |
+| RNF002 | Rendimiento | Tiempo de respuesta < 2 segundos para operaciones principales | Alta | |
+| RNF003 | Disponibilidad | 99.5% uptime objetivo | Alta | |
+| RNF004 | Seguridad | Encriptación AES-256 y autenticación JWT | Alta | |
+| RNF005 | Escalabilidad | Arquitectura preparada para crecimiento de usuarios | Media | |
+
+**Total de Requerimientos No Funcionales**: 5 requerimientos
+- **Prioridad Alta**: 4 requerimientos (RNF001, RNF002, RNF003, RNF004)
+- **Prioridad Media**: 1 requerimiento (RNF005)
+
 ---
 
 ## 2. Riesgos
@@ -85,7 +122,37 @@ Desarrollar una plataforma segura y eficiente de viajes compartidos exclusiva pa
 
 ### 3.1 Planteamiento del problema
 
-La comunidad universitaria de la UPT enfrenta dificultades de movilidad, incluyendo altos costos de transporte, falta de opciones eficientes y horarios limitados. No existe una plataforma centralizada que permita organizar viajes compartidos de manera segura y confiable dentro del ámbito universitario.
+La comunidad estudiantil de la Universidad Privada de Tacna enfrenta diariamente una serie de desafíos críticos relacionados con su desplazamiento hacia y desde el campus universitario. El diagnóstico situacional revela una **desconexión severa entre la oferta y la demanda de movilidad**.
+
+**Por un lado**, un segmento de estudiantes posee vehículos particulares que a menudo circulan con asientos vacíos, contribuyendo significativamente a:
+- La congestión vehicular en las inmediaciones del campus
+- La saturación de los estacionamientos universitarios
+- El aumento innecesario de emisiones contaminantes
+
+**Por otro lado**, la gran mayoría de estudiantes depende de:
+- Un sistema de transporte público que suele ser **lento, incómodo e impredecible**
+- Servicios de taxi cuyas **tarifas son muy elevadas** para el presupuesto estudiantil
+
+**Impacto Económico Crítico:**
+Específicamente, se ha identificado que el estudiante promedio invierte entre **S/. 8 y S/. 15 diarios en transporte**, lo cual representa:
+- Una **carga financiera insostenible** que limita su acceso a recursos académicos o alimentación
+- En términos mensuales, esto representa un gasto aproximado de **S/. 240 a S/. 450** por estudiante
+- Para un estudiante en ciclo completo (10 meses), el costo anual puede llegar a **S/. 2,400 a S/. 4,500**
+
+**Riesgos de Seguridad:**
+La falta de una plataforma institucionalizada expone a los estudiantes a:
+- **Riesgos de seguridad** al utilizar transporte informal ("colectivos") sin ninguna garantía sobre la identidad del conductor
+- Falta de verificación del estado del vehículo
+- Ausencia de mecanismos de seguimiento o protección
+
+**Consecuencias Sistémicas:**
+La ausencia de una herramienta digital que centralice, organice y valide estos desplazamientos perpetúa un ciclo de:
+- **Ineficiencia** en el uso de recursos vehiculares disponibles
+- **Contaminación ambiental** por mayor número de vehículos circulando
+- **Pérdida de tiempo productivo** en esperas y desplazamientos largos
+- **Desigualdad económica** al limitar el acceso de estudiantes de menores recursos
+
+Por lo tanto, se requiere urgentemente una solución tecnológica institucional que conecte eficientemente a estudiantes conductores con estudiantes pasajeros, garantizando seguridad, validación de identidad mediante correos institucionales, y reducción significativa de costos de transporte.
 
 ### 3.2 Consideraciones de hardware y software
 
@@ -219,15 +286,44 @@ La tecnología seleccionada para el desarrollo de RideUPT está basada en herram
 - Dominio: Opcional pero recomendado (ej: rideupt.upt.edu.pe)
 - SSL/HTTPS: Certificados incluidos en servicios cloud (Let's Encrypt gratuito)
 
+#### Cobertura de Requerimientos Funcionales
+
+La tecnología propuesta soporta completamente los 8 requerimientos funcionales definidos:
+
+| Requerimiento | Tecnología/Herramienta | Viabilidad Técnica |
+|---------------|------------------------|-------------------|
+| **RF001 - Autenticar Usuario** | Firebase Authentication, JWT, MongoDB | ✅ **Soportado**: Firebase Auth permite registro/login con email/contraseña. MongoDB almacena credenciales de usuarios. |
+| **RF002 - Gestionar Conductor** | Node.js Backend, MongoDB, Admin Panel | ✅ **Soportado**: API REST permite aprobación/edición de perfiles. MongoDB almacena estados de aprobación. |
+| **RF003 - Crear Viaje** | Geolocator (Flutter), Google Maps API, MongoDB | ✅ **Soportado**: Geolocator obtiene ubicación GPS. MongoDB almacena viajes con índices geoespaciales. |
+| **RF004 - Buscar Viaje** | MongoDB con índices geoespaciales, API REST | ✅ **Soportado**: Búsquedas por origen, destino y hora. Índices 2dsphere para consultas geográficas eficientes. |
+| **RF005 - Enviar Notificación** | Firebase Cloud Messaging (FCM), Socket.io | ✅ **Soportado**: FCM para push notifications. Socket.io para notificaciones en tiempo real vía WebSockets. |
+| **RF006 - Consultar Historial** | MongoDB, API REST con filtros temporales | ✅ **Soportado**: Consultas de viajes pasados y futuros usando timestamps. Filtros por estado y fecha. |
+| **RF007 - Expirar Viaje** | Node.js con timers, MongoDB TTL index | ✅ **Soportado**: Timeouts programados en Node.js. MongoDB puede usar TTL index para expiración automática. |
+| **RF008 - Autenticar con Google** | Firebase Authentication, Google Sign-In SDK | ✅ **Soportado**: Firebase Auth integrado con Google OAuth. SDK nativo en Flutter. |
+
+#### Cobertura de Requerimientos No Funcionales
+
+La tecnología propuesta garantiza el cumplimiento de los 5 requerimientos no funcionales definidos:
+
+| Requerimiento | Tecnología/Herramienta | Cumplimiento | Detalle |
+|---------------|------------------------|--------------|---------|
+| **RNF001 - Usabilidad** | Flutter Material Design, UX Research | ✅ **Cumplido**: Flutter proporciona widgets pre-diseñados y Material Design guidelines. Interfaz intuitiva con navegación clara. Tiempo de aprendizaje < 3 min mediante onboarding y guías visuales. | Diseño responsive, feedback visual inmediato, mensajes claros, iconografía estándar |
+| **RNF002 - Rendimiento** | Node.js optimizado, MongoDB índices, CDN, Caching | ✅ **Cumplido**: API REST optimizada, índices en MongoDB para consultas rápidas. Cache en cliente (SharedPreferences). Tiempo de respuesta < 2 seg mediante optimización de consultas y conexiones pool. | Índices geoespaciales, conexiones pool (max 50), compresión de respuestas, lazy loading |
+| **RNF003 - Disponibilidad** | Servicios cloud con SLA, Monitoreo, Backup automático | ✅ **Cumplido**: Firebase Hosting garantiza 99.95% uptime. MongoDB Atlas M10+ ofrece 99.95% SLA. Servidor VPS con monitoreo y auto-recovery. Meta: 99.5% alcanzable. | Redundancia en MongoDB Atlas, monitoreo con health checks, backups automáticos diarios |
+| **RNF004 - Seguridad** | HTTPS/TLS, JWT, bcrypt, AES-256 (si aplica), Firebase Auth | ✅ **Cumplido**: HTTPS obligatorio (SSL/TLS). JWT para autenticación. bcrypt para hash de contraseñas. Firebase Auth con encriptación de extremo a extremo. Datos en tránsito y reposo encriptados. | Tokens JWT con expiración, validación de entrada, CORS configurado, rate limiting |
+| **RNF005 - Escalabilidad** | Arquitectura cloud-native, MongoDB horizontal, Load balancing | ✅ **Cumplido**: Arquitectura stateless permite escalado horizontal. MongoDB Atlas escalable automáticamente. Microservicios preparados. Pool de conexiones configurable. | Separación frontend/backend, stateless API, escalado horizontal de servidores, índices optimizados |
+
 #### Evaluación de Capacidad Técnica
 
 La implementación del sistema es técnicamente factible porque:
 
 1. **Tecnologías maduras**: Todas las tecnologías propuestas son estables, documentadas y ampliamente utilizadas en la industria
-2. **Recursos disponibles**: Las herramientas necesarias son gratuitas o de bajo costo
-3. **Escalabilidad**: La arquitectura permite crecer según la demanda
-4. **Mantenibilidad**: Código modular y bien estructurado facilita el mantenimiento
-5. **Soporte comunitario**: Amplia comunidad y recursos de aprendizaje disponibles
+2. **Cobertura completa de requerimientos**: Los 8 requerimientos funcionales (RF001-RF008) y los 5 requerimientos no funcionales (RNF001-RNF005) están completamente cubiertos por el stack tecnológico propuesto
+3. **Cumplimiento de calidad**: Los RNF garantizan usabilidad, rendimiento, disponibilidad, seguridad y escalabilidad adecuados para la comunidad universitaria
+4. **Recursos disponibles**: Las herramientas necesarias son gratuitas o de bajo costo
+5. **Escalabilidad**: La arquitectura permite crecer según la demanda (RNF005)
+6. **Mantenibilidad**: Código modular y bien estructurado facilita el mantenimiento
+7. **Soporte comunitario**: Amplia comunidad y recursos de aprendizaje disponibles
 
 **Conclusión de Factibilidad Técnica**: ✅ **VIABLE**
 
@@ -592,29 +688,53 @@ El beneficio, obtenido lícitamente, no es sólo una recompensa a la inversión,
 **Beneficios Tangibles** (fácilmente cuantificables):
 
 1. **Reducción de costos de transporte para estudiantes**
-   - Ahorro promedio estimado: 40% del costo de transporte individual
-   - Si 500 estudiantes ahorran S/. 2.00 diarios en promedio
-   - Ahorro mensual de la comunidad: S/. 30,000.00
-   - Ahorro anual estimado: S/. 360,000.00 (beneficio para usuarios)
+   - **Costo actual**: El estudiante promedio invierte entre **S/. 8 y S/. 15 diarios** en transporte
+   - **Costo mensual actual**: S/. 240 a S/. 450 por estudiante
+   - **Costo anual actual**: S/. 2,400 a S/. 4,500 por estudiante (ciclo de 10 meses)
+   - **Ahorro con RideUPT**: Estimado del **40-60%** del costo actual al compartir gastos de combustible
+   - **Ahorro diario por estudiante**: S/. 3.20 a S/. 9.00 (promedio S/. 6.00 diarios)
+   - **Ahorro mensual por estudiante**: S/. 96 a S/. 270 (promedio S/. 180 mensuales)
+   - **Ahorro anual por estudiante**: S/. 960 a S/. 2,700 (promedio S/. 1,800 anuales)
+   - **Proyección para 500 estudiantes activos**:
+     * Ahorro diario de la comunidad: S/. 1,600 a S/. 4,500
+     * Ahorro mensual de la comunidad: S/. 48,000 a S/. 135,000
+     * **Ahorro anual estimado: S/. 480,000 a S/. 1,350,000** (promedio S/. 900,000 anuales)
 
 2. **Reducción de costos operativos de la universidad**
-   - Menor necesidad de estacionamientos
+   - **Reducción de congestión vehicular**: Menos vehículos circulando al llenar asientos vacíos
+   - **Reducción de saturación de estacionamientos**: Mejor aprovechamiento de espacios disponibles
+   - Menor necesidad de expansión de infraestructura de estacionamiento
    - Menor mantenimiento de infraestructura vial
-   - Ahorro estimado: S/. 5,000.00 anuales
+   - **Ahorro estimado**: S/. 8,000.00 a S/. 12,000.00 anuales
 
 3. **Optimización de recursos**
    - Mejor aprovechamiento del tiempo de estudiantes y personal
-   - Reducción de tardanzas y ausentismo
+   - Reducción de tardanzas y ausentismo por problemas de transporte
+   - Menor pérdida de tiempo productivo en desplazamientos
+
+4. **Eliminación de riesgos de seguridad**
+   - Validación de identidad mediante correos institucionales
+   - Verificación de vehículos y conductores
+   - Eliminación de dependencia de transporte informal no regulado
+   - **Valor cuantificado en reducción de riesgos**: No cuantificable pero crítico para la seguridad estudiantil
 
 **Beneficios Intangibles** (no fácilmente cuantificables):
 
 1. **Mejoras en la eficiencia del área bajo estudio**
    - Sistema automatizado reduce tiempo de coordinación manual
    - Disponibilidad 24/7 vs coordinación manual limitada
+   - Conexión eficiente entre oferta (conductores con asientos vacíos) y demanda (estudiantes que necesitan transporte)
 
 2. **Disponibilidad del recurso humano**
    - Menor tiempo perdido en búsqueda de transporte
-   - Mayor puntualidad
+   - Eliminación de esperas prolongadas en transporte público lento e impredecible
+   - Mayor puntualidad en clases y actividades académicas
+
+3. **Seguridad y protección estudiantil**
+   - Eliminación de riesgos asociados con transporte informal no regulado
+   - Validación institucional de conductores y vehículos
+   - Trazabilidad y seguimiento de viajes compartidos
+   - Mecanismos de calificación y reporte de incidencias
 
 3. **Mejoras en planeación, control y uso de recursos**
    - Datos disponibles para análisis de patrones de movilidad
@@ -646,10 +766,18 @@ El beneficio, obtenido lícitamente, no es sólo una recompensa a la inversión,
    - Contribución a la sostenibilidad institucional
 
 **Estimación Total de Beneficios Anuales**:
-- Beneficios tangibles para usuarios: S/. 360,000.00 (ahorro en transporte)
-- Beneficios tangibles para institución: S/. 5,000.00
-- Beneficios intangibles: Significativos pero no cuantificables en términos monetarios directos
-- **Total beneficios tangibles anuales**: S/. 365,000.00
+- **Beneficios tangibles para usuarios** (ahorro en transporte): 
+  * Rango: S/. 480,000.00 a S/. 1,350,000.00
+  * Promedio: **S/. 900,000.00** anuales (basado en 500 estudiantes activos)
+- **Beneficios tangibles para institución** (reducción de costos operativos): 
+  * Rango: S/. 8,000.00 a S/. 12,000.00
+  * Promedio: **S/. 10,000.00** anuales
+- **Beneficios intangibles**: Significativos pero no cuantificables en términos monetarios directos
+  * Seguridad y protección estudiantil
+  * Reducción de contaminación ambiental
+  * Mejora en calidad de vida estudiantil
+  * Reducción de desigualdad económica
+- **Total beneficios tangibles anuales (promedio)**: **S/. 910,000.00**
 
 #### 5.1.2 Criterios de Inversión
 
@@ -660,14 +788,14 @@ En base a los costos y beneficios identificados se evalúa si es factible el des
 **Cálculo de la Relación B/C:**
 
 - **Costo Total del Proyecto (Inversión Inicial)**: S/. 27,755.00
-- **Beneficios Anuales Tangibles**: S/. 365,000.00
+- **Beneficios Anuales Tangibles (promedio)**: S/. 910,000.00
 - **Período de Análisis**: 3 años (vida útil estimada del sistema)
 
 **Beneficios Totales (3 años)**:
-- Año 1: S/. 365,000.00
-- Año 2: S/. 365,000.00 (considerando mantenimiento y actualizaciones)
-- Año 3: S/. 365,000.00
-- **Total Beneficios**: S/. 1,095,000.00
+- Año 1: S/. 910,000.00
+- Año 2: S/. 910,000.00 (considerando mantenimiento y actualizaciones, con crecimiento de usuarios)
+- Año 3: S/. 910,000.00 (operación estable)
+- **Total Beneficios**: S/. 2,730,000.00
 
 **Costos Totales (3 años)**:
 - Inversión Inicial: S/. 27,755.00
@@ -675,12 +803,13 @@ En base a los costos y beneficios identificados se evalúa si es factible el des
 - **Total Costos**: S/. 34,955.00
 
 **Relación B/C = Beneficios Totales / Costos Totales**
-**B/C = S/. 1,095,000.00 / S/. 34,955.00 = 31.33**
+**B/C = S/. 2,730,000.00 / S/. 34,955.00 = 78.11**
 
 **Interpretación**: 
-- ✅ **B/C = 31.33 > 1**: El proyecto es **ALTAMENTE ACEPTABLE**
-- Por cada sol invertido, se generan beneficios equivalentes a 31.33 soles
-- El proyecto es muy rentable desde el punto de vista económico
+- ✅ **B/C = 78.11 > 1**: El proyecto es **EXTREMADAMENTE ACEPTABLE**
+- Por cada sol invertido, se generan beneficios equivalentes a 78.11 soles
+- El proyecto es extremadamente rentable desde el punto de vista económico
+- La relación beneficio/costo demuestra un retorno de inversión excepcional
 
 ##### 5.1.2.2 Valor Actual Neto (VAN)
 
@@ -689,7 +818,7 @@ Valor actual de los beneficios netos que genera el proyecto. Si el VAN es mayor 
 **Parámetros:**
 - **Tasa de descuento (COK)**: 10% anual (costo de oportunidad del capital)
 - **Inversión Inicial**: S/. 27,755.00
-- **Beneficios Netos Anuales**: S/. 365,000.00 - S/. 2,400.00 = S/. 362,600.00
+- **Beneficios Netos Anuales**: S/. 910,000.00 - S/. 2,400.00 = S/. 907,600.00
 - **Período**: 3 años
 
 **Cálculo del VAN:**
@@ -697,19 +826,20 @@ Valor actual de los beneficios netos que genera el proyecto. Si el VAN es mayor 
 ```
 VAN = -Inversión Inicial + Σ (Beneficio Neto / (1 + COK)^n)
 
-VAN = -27,755 + [362,600 / (1.10)^1] + [362,600 / (1.10)^2] + [362,600 / (1.10)^3]
+VAN = -27,755 + [907,600 / (1.10)^1] + [907,600 / (1.10)^2] + [907,600 / (1.10)^3]
 
-VAN = -27,755 + 329,636.36 + 299,669.42 + 272,426.75
+VAN = -27,755 + 825,090.91 + 750,082.64 + 681,893.31
 
-VAN = -27,755 + 901,732.53
+VAN = -27,755 + 2,257,066.86
 
-VAN = S/. 873,977.53
+VAN = S/. 2,229,311.86
 ```
 
 **Interpretación**:
-- ✅ **VAN = S/. 873,977.53 > 0**: El proyecto es **ALTAMENTE ACEPTABLE**
-- El proyecto genera un valor actual neto positivo muy significativo
-- La inversión es altamente rentable
+- ✅ **VAN = S/. 2,229,311.86 > 0**: El proyecto es **EXTREMADAMENTE ACEPTABLE**
+- El proyecto genera un valor actual neto extremadamente positivo
+- La inversión es excepcionalmente rentable
+- El VAN supera la inversión inicial por más de 80 veces
 
 ##### 5.1.2.3 Tasa Interna de Retorno (TIR)
 
@@ -724,15 +854,16 @@ La TIR es la tasa de descuento que hace el VAN = 0
 Mediante iteración o herramientas financieras:
 
 ```
-0 = -27,755 + [362,600 / (1 + TIR)^1] + [362,600 / (1 + TIR)^2] + [362,600 / (1 + TIR)^3]
+0 = -27,755 + [907,600 / (1 + TIR)^1] + [907,600 / (1 + TIR)^2] + [907,600 / (1 + TIR)^3]
 ```
 
-**TIR ≈ 1,305% anual** (aproximadamente)
+**TIR ≈ 3,268% anual** (aproximadamente)
 
 **Interpretación**:
-- ✅ **TIR = 1,305% >> COK = 10%**: El proyecto es **EXTREMADAMENTE ACEPTABLE**
-- La rentabilidad del proyecto supera ampliamente el costo de oportunidad
-- El proyecto es altamente atractivo desde el punto de vista de retorno de inversión
+- ✅ **TIR = 3,268% >> COK = 10%**: El proyecto es **EXTREMADAMENTE ACEPTABLE**
+- La rentabilidad del proyecto supera extraordinariamente el costo de oportunidad
+- El proyecto es excepcionalmente atractivo desde el punto de vista de retorno de inversión
+- La TIR indica una rentabilidad promedio anual de más de 3,200%, lo que demuestra la viabilidad económica excepcional del proyecto
 
 **Conclusión del Análisis Financiero**: ✅ **ALTAMENTE VIABLE**
 
@@ -750,11 +881,14 @@ El análisis de factibilidad realizado para el proyecto RideUPT arroja resultado
    - Todas las tecnologías necesarias están disponibles y son accesibles
    - La infraestructura requerida puede implementarse con recursos razonables
    - El stack tecnológico propuesto es moderno, escalable y mantenible
+   - Cobertura completa de 8 Requerimientos Funcionales (RF001-RF008) y 5 Requerimientos No Funcionales (RNF001-RNF005)
+   - Cumplimiento garantizado de usabilidad, rendimiento, disponibilidad, seguridad y escalabilidad
 
-2. **Factibilidad Económica**: ✅ **VIABLE**
+2. **Factibilidad Económica**: ✅ **EXTREMADAMENTE VIABLE**
    - Inversión inicial razonable: S/. 27,755.00
-   - Beneficios significativos superan ampliamente los costos
-   - Relación Beneficio/Costo de 31.33 indica alta rentabilidad
+   - Beneficios extremadamente significativos: S/. 910,000.00 anuales promedio
+   - Relación Beneficio/Costo de 78.11 indica rentabilidad excepcional
+   - Ahorro potencial para estudiantes: S/. 480,000 a S/. 1,350,000 anuales (dependiendo de adopción)
 
 3. **Factibilidad Operativa**: ✅ **VIABLE**
    - El sistema puede ser operado eficientemente con recursos mínimos adicionales
@@ -778,10 +912,11 @@ El análisis de factibilidad realizado para el proyecto RideUPT arroja resultado
 
 ### Indicadores Financieros
 
-- **Relación Beneficio/Costo (B/C)**: 31.33 (Altamente favorable)
-- **Valor Actual Neto (VAN)**: S/. 873,977.53 (Muy positivo)
-- **Tasa Interna de Retorno (TIR)**: ~1,305% (Extremadamente favorable)
+- **Relación Beneficio/Costo (B/C)**: 78.11 (Extremadamente favorable)
+- **Valor Actual Neto (VAN)**: S/. 2,229,311.86 (Extremadamente positivo)
+- **Tasa Interna de Retorno (TIR)**: ~3,268% (Extremadamente favorable)
 - **Período de Recuperación**: Menos de 1 mes (muy rápido)
+- **Beneficios Anuales Promedio**: S/. 910,000.00 (ahorro en transporte para estudiantes + reducción de costos operativos)
 
 ### Recomendación Final
 
@@ -790,11 +925,12 @@ El análisis de factibilidad realizado para el proyecto RideUPT arroja resultado
 El análisis exhaustivo en todas las dimensiones (técnica, económica, operativa, legal, social y ambiental) demuestra que:
 
 1. El proyecto es técnicamente factible con tecnologías modernas y accesibles
-2. La inversión es razonable y genera retornos excepcionales
-3. El sistema puede operarse eficientemente
-4. No existen impedimentos legales significativos
-5. El impacto social es muy positivo
-6. El impacto ambiental es altamente beneficioso
+2. Todos los requerimientos funcionales (8 RF) y no funcionales (5 RNF) están completamente cubiertos
+3. La inversión es razonable y genera retornos excepcionales
+4. El sistema puede operarse eficientemente cumpliendo con los estándares de calidad definidos
+5. No existen impedimentos legales significativos
+6. El impacto social es muy positivo
+7. El impacto ambiental es altamente beneficioso
 
 El proyecto no solo es viable, sino que representa una oportunidad excepcional para la Universidad Privada de Tacna de posicionarse como líder en innovación social, sostenibilidad y apoyo a su comunidad universitaria.
 

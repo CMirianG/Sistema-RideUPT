@@ -425,8 +425,9 @@ class _DriverProfileScreenState extends State<DriverProfileScreen> {
                 validator: (val) {
                   if (val == null ||
                       int.tryParse(val) == null ||
-                      val.length != 4)
+                      val.length != 4) {
                     return 'Año inválido';
+                  }
                   return null;
                 },
               ),

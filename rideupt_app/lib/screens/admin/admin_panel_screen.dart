@@ -15,7 +15,8 @@ class AdminPanelScreen extends StatefulWidget {
   State<AdminPanelScreen> createState() => _AdminPanelScreenState();
 }
 
-class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerProviderStateMixin {
+class _AdminPanelScreenState extends State<AdminPanelScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
 
@@ -24,7 +25,8 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {
-      if (_tabController.indexIsChanging || _tabController.index != _selectedIndex) {
+      if (_tabController.indexIsChanging ||
+          _tabController.index != _selectedIndex) {
         setState(() {
           _selectedIndex = _tabController.index;
         });
@@ -83,7 +85,9 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
                             padding: const EdgeInsets.all(AppTheme.spacingSM),
                             decoration: BoxDecoration(
                               color: colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(AppTheme.radiusMD),
+                              borderRadius: BorderRadius.circular(
+                                AppTheme.radiusMD,
+                              ),
                             ),
                             child: Icon(
                               Icons.admin_panel_settings_rounded,
@@ -118,7 +122,9 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
                     // Navigation items
                     Expanded(
                       child: ListView(
-                        padding: const EdgeInsets.symmetric(vertical: AppTheme.spacingSM),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppTheme.spacingSM,
+                        ),
                         children: [
                           _buildNavItem(
                             context: context,
@@ -187,10 +193,16 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
                             onPressed: () async {
                               if (!mounted) return;
                               final navigator = Navigator.of(context);
-                              final authProvider = Provider.of<AuthProvider>(context, listen: false);
+                              final authProvider = Provider.of<AuthProvider>(
+                                context,
+                                listen: false,
+                              );
                               await authProvider.logout();
                               if (mounted) {
-                                navigator.pushNamedAndRemoveUntil('/auth', (route) => false);
+                                navigator.pushNamedAndRemoveUntil(
+                                  '/auth',
+                                  (route) => false,
+                                );
                               }
                             },
                             icon: const Icon(Icons.logout_rounded, size: 20),
@@ -207,105 +219,114 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
               ),
               // Contenido principal
               Expanded(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      colorScheme.primary.withValues(alpha: 0.03),
-                      colorScheme.surface,
-                    ],
-                    stops: const [0.0, 0.2],
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        colorScheme.primary.withValues(alpha: 0.03),
+                        colorScheme.surface,
+                      ],
+                      stops: const [0.0, 0.2],
+                    ),
                   ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Header para Desktop - Material Design 3
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppTheme.spacingXXL,
-                        vertical: AppTheme.spacingXL,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colorScheme.surface,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: colorScheme.outline.withValues(alpha: 0.12),
-                            width: 1,
-                          ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Header para Desktop - Material Design 3
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppTheme.spacingXXL,
+                          vertical: AppTheme.spacingXL,
                         ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _getTabTitle(_selectedIndex),
-                                  style: theme.textTheme.headlineMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: -0.5,
-                                  ),
-                                ),
-                                const SizedBox(height: AppTheme.spacingXS),
-                                Text(
-                                  _getTabSubtitle(_selectedIndex),
-                                  style: theme.textTheme.bodyLarge?.copyWith(
-                                    color: colorScheme.onSurfaceVariant,
-                                  ),
-                                ),
-                              ],
+                        decoration: BoxDecoration(
+                          color: colorScheme.surface,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: colorScheme.outline.withValues(
+                                alpha: 0.12,
+                              ),
+                              width: 1,
                             ),
                           ),
-                          IconButton.filledTonal(
-                            onPressed: () {
-                              setState(() {});
-                            },
-                            icon: const Icon(Icons.refresh_rounded),
-                            tooltip: 'Actualizar',
-                          ),
-                          const SizedBox(width: AppTheme.spacingSM),
-                          IconButton.filledTonal(
-                            onPressed: () async {
-                              if (!mounted) return;
-                              final navigator = Navigator.of(context);
-                              final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                              await authProvider.logout();
-                              if (mounted) {
-                                navigator.pushNamedAndRemoveUntil('/auth', (route) => false);
-                              }
-                            },
-                            icon: const Icon(Icons.logout_rounded),
-                            tooltip: 'Cerrar sesión',
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Contenido de la pestaña
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: TabBarView(
-                          controller: _tabController,
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: const [
-                            DriversTab(),
-                            UsersTab(),
-                            RankingsTab(),
-                            StatsTab(),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _getTabTitle(_selectedIndex),
+                                    style: theme.textTheme.headlineMedium
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          letterSpacing: -0.5,
+                                        ),
+                                  ),
+                                  const SizedBox(height: AppTheme.spacingXS),
+                                  Text(
+                                    _getTabSubtitle(_selectedIndex),
+                                    style: theme.textTheme.bodyLarge?.copyWith(
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton.filledTonal(
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              icon: const Icon(Icons.refresh_rounded),
+                              tooltip: 'Actualizar',
+                            ),
+                            const SizedBox(width: AppTheme.spacingSM),
+                            IconButton.filledTonal(
+                              onPressed: () async {
+                                if (!mounted) return;
+                                final navigator = Navigator.of(context);
+                                final authProvider = Provider.of<AuthProvider>(
+                                  context,
+                                  listen: false,
+                                );
+                                await authProvider.logout();
+                                if (mounted) {
+                                  navigator.pushNamedAndRemoveUntil(
+                                    '/auth',
+                                    (route) => false,
+                                  );
+                                }
+                              },
+                              icon: const Icon(Icons.logout_rounded),
+                              tooltip: 'Cerrar sesión',
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      // Contenido de la pestaña
+                      Expanded(
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: TabBarView(
+                            controller: _tabController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: const [
+                              DriversTab(),
+                              UsersTab(),
+                              RankingsTab(),
+                              StatsTab(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
               ),
             ],
           ),
@@ -331,172 +352,196 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
               stops: const [0.0, 0.2],
             ),
           ),
-        child: Column(
-          children: [
-            // AppBar mejorado con diseño profesional
-            Container(
-              decoration: BoxDecoration(
-                color: colorScheme.surface,
-                border: Border(
-                  bottom: BorderSide(
-                    color: colorScheme.outline.withValues(alpha: 0.2),
-                    width: 1,
-                  ),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.shadow.withValues(alpha: 0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: SafeArea(
-                bottom: false,
-                child: Column(
-                  children: [
-                    // Header principal
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isTablet ? AppTheme.spacingLG : AppTheme.spacingMD,
-                        vertical: AppTheme.spacingMD,
-                      ),
-                      child: Row(
-                        children: [
-                          // Logo y título - Material Design 3
-                          Container(
-                            padding: const EdgeInsets.all(AppTheme.spacingSM),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(AppTheme.radiusMD),
-                            ),
-                            child: Icon(
-                              Icons.admin_panel_settings_rounded,
-                              color: colorScheme.onPrimaryContainer,
-                              size: 28,
-                            ),
-                          ),
-                          const SizedBox(width: AppTheme.spacingMD),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Panel Administrativo',
-                                  style: theme.textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: -0.3,
-                                  ),
-                                ),
-                                Text(
-                                  'RideUPT',
-                                  style: theme.textTheme.bodyMedium?.copyWith(
-                                    color: colorScheme.onSurfaceVariant,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          // Botones de acción
-                          IconButton.filledTonal(
-                            icon: const Icon(Icons.refresh_rounded),
-                            onPressed: () {
-                              setState(() {});
-                            },
-                            tooltip: 'Actualizar',
-                          ),
-                          const SizedBox(width: AppTheme.spacingXS),
-                          IconButton.filledTonal(
-                            icon: const Icon(Icons.logout_rounded),
-                            onPressed: () async {
-                              if (!mounted) return;
-                              final navigator = Navigator.of(context);
-                              final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                              await authProvider.logout();
-                              if (mounted) {
-                                navigator.pushNamedAndRemoveUntil('/auth', (route) => false);
-                              }
-                            },
-                            tooltip: 'Cerrar sesión',
-                          ),
-                        ],
-                      ),
+          child: Column(
+            children: [
+              // AppBar mejorado con diseño profesional
+              Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: colorScheme.outline.withValues(alpha: 0.2),
+                      width: 1,
                     ),
-                    // TabBar mejorado con Material Design 3
-                    Container(
-                      color: colorScheme.surface,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: isTablet ? AppTheme.spacingLG : AppTheme.spacingMD,
-                      ),
-                      child: TabBar(
-                        controller: _tabController,
-                        isScrollable: !isTablet,
-                        indicatorColor: colorScheme.primary,
-                        indicatorWeight: 3,
-                        labelColor: colorScheme.primary,
-                        unselectedLabelColor: colorScheme.onSurfaceVariant,
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        dividerColor: Colors.transparent,
-                        labelStyle: theme.textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: isTablet ? 14 : 13,
-                          letterSpacing: 0.1,
-                        ),
-                        unselectedLabelStyle: theme.textTheme.labelLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: isTablet ? 14 : 13,
-                          letterSpacing: 0.1,
-                        ),
-                        tabs: [
-                          Tab(
-                            height: 52,
-                            icon: const Icon(Icons.drive_eta_outlined, size: 22),
-                            iconMargin: const EdgeInsets.only(bottom: 4),
-                            text: 'Conductores',
-                          ),
-                          Tab(
-                            height: 52,
-                            icon: const Icon(Icons.people_outline, size: 22),
-                            iconMargin: const EdgeInsets.only(bottom: 4),
-                            text: 'Usuarios',
-                          ),
-                          Tab(
-                            height: 52,
-                            icon: const Icon(Icons.emoji_events_outlined, size: 22),
-                            iconMargin: const EdgeInsets.only(bottom: 4),
-                            text: 'Rankings',
-                          ),
-                          Tab(
-                            height: 52,
-                            icon: const Icon(Icons.analytics_outlined, size: 22),
-                            iconMargin: const EdgeInsets.only(bottom: 4),
-                            text: 'Estadísticas',
-                          ),
-                        ],
-                      ),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.shadow.withValues(alpha: 0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
-              ),
-            ),
-            // Contenido de las pestañas
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    DriversTab(),
-                    UsersTab(),
-                    RankingsTab(),
-                    StatsTab(),
-                  ],
+                child: SafeArea(
+                  bottom: false,
+                  child: Column(
+                    children: [
+                      // Header principal
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                              isTablet
+                                  ? AppTheme.spacingLG
+                                  : AppTheme.spacingMD,
+                          vertical: AppTheme.spacingMD,
+                        ),
+                        child: Row(
+                          children: [
+                            // Logo y título - Material Design 3
+                            Container(
+                              padding: const EdgeInsets.all(AppTheme.spacingSM),
+                              decoration: BoxDecoration(
+                                color: colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(
+                                  AppTheme.radiusMD,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.admin_panel_settings_rounded,
+                                color: colorScheme.onPrimaryContainer,
+                                size: 28,
+                              ),
+                            ),
+                            const SizedBox(width: AppTheme.spacingMD),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Panel Administrativo',
+                                    style: theme.textTheme.titleLarge?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: -0.3,
+                                    ),
+                                  ),
+                                  Text(
+                                    'RideUPT',
+                                    style: theme.textTheme.bodyMedium?.copyWith(
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Botones de acción
+                            IconButton.filledTonal(
+                              icon: const Icon(Icons.refresh_rounded),
+                              onPressed: () {
+                                setState(() {});
+                              },
+                              tooltip: 'Actualizar',
+                            ),
+                            const SizedBox(width: AppTheme.spacingXS),
+                            IconButton.filledTonal(
+                              icon: const Icon(Icons.logout_rounded),
+                              onPressed: () async {
+                                if (!mounted) return;
+                                final navigator = Navigator.of(context);
+                                final authProvider = Provider.of<AuthProvider>(
+                                  context,
+                                  listen: false,
+                                );
+                                await authProvider.logout();
+                                if (mounted) {
+                                  navigator.pushNamedAndRemoveUntil(
+                                    '/auth',
+                                    (route) => false,
+                                  );
+                                }
+                              },
+                              tooltip: 'Cerrar sesión',
+                            ),
+                          ],
+                        ),
+                      ),
+                      // TabBar mejorado con Material Design 3
+                      Container(
+                        color: colorScheme.surface,
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                              isTablet
+                                  ? AppTheme.spacingLG
+                                  : AppTheme.spacingMD,
+                        ),
+                        child: TabBar(
+                          controller: _tabController,
+                          isScrollable: !isTablet,
+                          indicatorColor: colorScheme.primary,
+                          indicatorWeight: 3,
+                          labelColor: colorScheme.primary,
+                          unselectedLabelColor: colorScheme.onSurfaceVariant,
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          dividerColor: Colors.transparent,
+                          labelStyle: theme.textTheme.labelLarge?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: isTablet ? 14 : 13,
+                            letterSpacing: 0.1,
+                          ),
+                          unselectedLabelStyle: theme.textTheme.labelLarge
+                              ?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: isTablet ? 14 : 13,
+                                letterSpacing: 0.1,
+                              ),
+                          tabs: [
+                            Tab(
+                              height: 52,
+                              icon: const Icon(
+                                Icons.drive_eta_outlined,
+                                size: 22,
+                              ),
+                              iconMargin: const EdgeInsets.only(bottom: 4),
+                              text: 'Conductores',
+                            ),
+                            Tab(
+                              height: 52,
+                              icon: const Icon(Icons.people_outline, size: 22),
+                              iconMargin: const EdgeInsets.only(bottom: 4),
+                              text: 'Usuarios',
+                            ),
+                            Tab(
+                              height: 52,
+                              icon: const Icon(
+                                Icons.emoji_events_outlined,
+                                size: 22,
+                              ),
+                              iconMargin: const EdgeInsets.only(bottom: 4),
+                              text: 'Rankings',
+                            ),
+                            Tab(
+                              height: 52,
+                              icon: const Icon(
+                                Icons.analytics_outlined,
+                                size: 22,
+                              ),
+                              iconMargin: const EdgeInsets.only(bottom: 4),
+                              text: 'Estadísticas',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+              // Contenido de las pestañas
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: const [
+                      DriversTab(),
+                      UsersTab(),
+                      RankingsTab(),
+                      StatsTab(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -542,7 +587,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
     required ColorScheme colorScheme,
   }) {
     final isSelected = _selectedIndex == index;
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppTheme.spacingSM,
@@ -564,18 +609,20 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
               vertical: AppTheme.spacingSM,
             ),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? colorScheme.primaryContainer.withValues(alpha: 0.5)
-                  : Colors.transparent,
+              color:
+                  isSelected
+                      ? colorScheme.primaryContainer.withValues(alpha: 0.5)
+                      : Colors.transparent,
               borderRadius: BorderRadius.circular(AppTheme.radiusMD),
             ),
             child: Row(
               children: [
                 Icon(
                   isSelected ? selectedIcon : icon,
-                  color: isSelected
-                      ? colorScheme.primary
-                      : colorScheme.onSurfaceVariant,
+                  color:
+                      isSelected
+                          ? colorScheme.primary
+                          : colorScheme.onSurfaceVariant,
                   size: 24,
                 ),
                 const SizedBox(width: AppTheme.spacingMD),
@@ -583,10 +630,12 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> with SingleTickerPr
                   child: Text(
                     label,
                     style: theme.textTheme.labelLarge?.copyWith(
-                      color: isSelected
-                          ? colorScheme.primary
-                          : colorScheme.onSurfaceVariant,
-                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                      color:
+                          isSelected
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.w500,
                     ),
                   ),
                 ),

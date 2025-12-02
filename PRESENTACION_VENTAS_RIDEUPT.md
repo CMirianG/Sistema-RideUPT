@@ -306,3 +306,4 @@ Una aplicación multiplataforma (Android, iOS, Web) que conecta estudiantes cond
 **Fecha:** 2025  
 **Preparado para:** Presentación de Ventas RideUPT
 
+
